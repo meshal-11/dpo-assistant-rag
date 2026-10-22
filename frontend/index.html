@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPO Assistant | مساعد مسؤول حماية البيانات</title>
+    <meta name="description" content="مساعد ذكي للإجابة عن الأسئلة المتعلقة بقواعد تعيين مسؤول حماية البيانات الشخصية بالاعتماد الحصري على الوثيقة التنظيمية.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="branding">
+                    <div class="brand-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="m9 12 2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="brand-title">DPO Assistant | مساعد مسؤول حماية البيانات</h1>
+                        <p class="brand-subtitle">نظام إجابة ذكي بالاعتماد الحصري على وثيقة مشروع قواعد تعيين مسؤول حماية البيانات الشخصية</p>
+                    </div>
+                </div>
+
+                <div class="header-badges">
+                    <span class="system-status-badge" id="system-status-indicator">
+                        <span class="status-dot"></span>
+                        <span id="status-text">جاري فحص النظام...</span>
+                    </span>
+                    <a href="/docs" target="_blank" class="badge-link" title="Open API Documentation">توثيق API (Swagger)</a>
+                </div>
+            </div>
+
+            <!-- Training Acknowledgement & Disclaimer -->
+            <div class="acknowledgement-bar">
+                <div class="ack-tag">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4"/>
+                        <path d="M12 8h.01"/>
+                    </svg>
+                    <span>مشروع تدريبي تم تطويره ضمن برنامج: <strong>تطوير حلول الذكاء الاصطناعي التوليدي</strong> في <a href="https://github.com/SDAIAAcademy" target="_blank" rel="noopener noreferrer">أكاديمية سدايا (SDAIA Academy)</a>.</span>
+                </div>
+                <div class="ack-disclaimer">
+                    تعتمد الإجابات حصراً على الوثيقة المرفقة؛ لا يمثل المشروع جهة رسمية أو اعتماداً من سدايا، ولا يزعم تمثيل أحدث القواعد المعتمدة.
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <!-- Messages List -->
+            <div class="messages-wrapper" id="messages-list">
+                <!-- Welcome Banner -->
+                <div class="message-card welcome-card" id="welcome-message">
+                    <div class="welcome-header">
+                        <div class="welcome-icon">📋</div>
+                        <h2>أهلاً بك في المساعد الذكي لمسؤول حماية البيانات</h2>
+                    </div>
+                    <p>
+                        يمكنك طرح أي تساؤل بخصوص قواعد ومتطلبات تعيين مسؤول حماية البيانات الشخصية وفقاً للوثيقة الاسترشادية المحددة.
+                        يقوم النظام بالبحث الدلالي في المقاطع وتوثيق رقم الصفحة والاقتباس المأخوذ منه.
+                    </p>
+                    <div class="suggested-section">
+                        <span class="suggested-label">أسئلة مقترحة للاختبار المباشر:</span>
+                        <div class="suggested-grid">
+                            <button type="button" class="suggestion-chip" data-question="ما متطلبات تعيين مسؤول حماية البيانات الشخصية؟">
+                                <span>1</span> ما متطلبات تعيين مسؤول حماية البيانات الشخصية؟
+                            </button>
+                            <button type="button" class="suggestion-chip" data-question="متى يجب تعيين مسؤول حماية البيانات الشخصية؟">
+                                <span>2</span> متى يجب تعيين مسؤول حماية البيانات الشخصية؟
+                            </button>
+                            <button type="button" class="suggestion-chip" data-question="هل يمكن أن يكون المسؤول متعاقدًا خارجيًا؟">
+                                <span>3</span> هل يمكن أن يكون المسؤول متعاقدًا خارجيًا؟
+                            </button>
+                            <button type="button" class="suggestion-chip" data-question="ما مهام مسؤول حماية البيانات الشخصية؟">
+                                <span>4</span> ما مهام مسؤول حماية البيانات الشخصية؟
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Banner -->
+            <div class="error-banner" id="error-banner" style="display: none;">
+                <div class="error-icon">⚠️</div>
+                <div class="error-content" id="error-content"></div>
+                <button type="button" class="error-close-btn" id="error-close-btn">&times;</button>
+            </div>
+
+            <!-- Input Form -->
+            <div class="input-panel">
+                <form id="chat-form" class="chat-form">
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="user-input" 
+                            class="chat-input" 
+                            placeholder="اكتب سؤالك هنا عن قواعد تعيين مسؤول حماية البيانات الشخصية..." 
+                            maxlength="500" 
+                            autocomplete="off"
+                            required
+                        >
+                        <span class="char-counter" id="char-counter">0 / 500</span>
+                    </div>
+                    <button type="submit" id="send-btn" class="send-button" title="إرسال السؤال">
+                        <span class="btn-text">إرسال</span>
+                        <svg class="send-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </form>
+                <div class="input-footer">
+                    <span>مصدر المعرفة: مشروع قواعد تعيين مسؤول حماية البيانات الشخصية (11 صفحة)</span>
+                    <button type="button" class="clear-chat-btn" id="clear-chat-btn">مسح المحادثة</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
